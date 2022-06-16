@@ -1,19 +1,18 @@
 package domain;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Student {
 	private String id;
 	private String name;
-	private Map<Term, StudentTerm> transcript;
+	private TermManger termManger;
 	private List<CourseSection> currentTerm;
 
 	public Student(String id, String name) {
 		this.id = id;
 		this.name = name;
-		this.transcript = new HashMap<>();
+		this.termManger = new TermManger();
 		this.currentTerm = new ArrayList<>();
 	}
 	
@@ -21,14 +20,12 @@ public class Student {
 		currentTerm.add(new CourseSection(c, section));
 	}
 
-	public Map<Term, StudentTerm> getTranscript() {
-		return transcript;
+	public Map<Term, StudentTerm> getTerms() {
+		return termManger.getTerms();
 	}
 
-	public void addTranscriptRecord(Course course, Term term, double grade) {
-	    if (!transcript.containsKey(term))
-	        transcript.put(term, new StudentTerm());
-	    transcript.get(term).addGrade(course, grade);
+	public void addCourseGrade(Course course, Term term, double grade) {
+	    termManger.addCourseGrade(course, term, grade);
     }
 
     public List<CourseSection> getCurrentTerm() {
