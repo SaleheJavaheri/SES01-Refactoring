@@ -7,7 +7,7 @@ import java.util.Map;
 public class Student {
 	private String id;
 	private String name;
-	private Map<Term, Map<Course, Double>> transcript;
+	private Map<Term, StudentTerm> transcript;
 	private List<CourseSection> currentTerm;
 
 	public Student(String id, String name) {
@@ -21,14 +21,14 @@ public class Student {
 		currentTerm.add(new CourseSection(c, section));
 	}
 
-	public Map<Term, Map<Course, Double>> getTranscript() {
+	public Map<Term, StudentTerm> getTranscript() {
 		return transcript;
 	}
 
 	public void addTranscriptRecord(Course course, Term term, double grade) {
 	    if (!transcript.containsKey(term))
-	        transcript.put(term, new HashMap<>());
-	    transcript.get(term).put(course, grade);
+	        transcript.put(term, new StudentTerm());
+	    transcript.get(term).addGrade(course, grade);
     }
 
     public List<CourseSection> getCurrentTerm() {
