@@ -7,15 +7,6 @@ import java.util.Map;
 public class Student {
 	private String id;
 	private String name;
-
-	static class CourseSection {
-        CourseSection(Course course, int section) {
-            this.course = course;
-            this.section = section;
-        }
-        Course course;
-	    int section;
-    }
 	private Map<Term, Map<Course, Double>> transcript;
 	private List<CourseSection> currentTerm;
 
