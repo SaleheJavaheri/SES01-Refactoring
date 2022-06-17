@@ -15,15 +15,15 @@ public class Course {
 		this.id = id;
 		this.name = name;
 		this.units = units;
-		prerequisites = new ArrayList<Course>();
+		prerequisites = new ArrayList<>();
 	}
 	
-	public void addPrerequisite(Course c) {
-		prerequisites.add(c);
+	public void addPrerequisite(Course course) {
+		prerequisites.add(course);
 	}
 
-	public void addPrerequisite(Course... pres) {
-		prerequisites.addAll(Arrays.asList(pres));
+	public void addPrerequisite(Course... courses) {
+		this.prerequisites.addAll(Arrays.asList(courses));
 	}
 
 	public List<Course> getPrerequisites() {
