@@ -43,4 +43,17 @@ public class Student {
 	public String toString() {
 		return name;
 	}
+
+	public double getGpa() {
+		double points = 0;
+		int totalUnits = 0;
+		for (Map.Entry<Term, StudentTerm> tr : getTerms().entrySet()) {
+			for (Map.Entry<Course, Double> r : tr.getValue().getGrades().entrySet()) {
+				points += r.getValue() * r.getKey().getUnits();
+				totalUnits += r.getKey().getUnits();
+			}
+		}
+		double gpa = points / totalUnits;
+		return gpa;
+	}
 }
