@@ -22,7 +22,7 @@ public class Course {
 		prerequisites.add(c);
 	}
 
-	public void addPrerequisites(Course... pres) {
+	public void addPrerequisite(Course... pres) {
 		prerequisites.addAll(Arrays.asList(pres));
 	}
 
