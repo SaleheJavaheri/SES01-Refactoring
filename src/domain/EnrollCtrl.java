@@ -4,6 +4,7 @@ import java.util.List;
 
 import domain.exceptions.AlreadyPassedCourseException;
 import domain.exceptions.EnrollmentRulesViolationException;
+import domain.exceptions.ExamTimeConflictException;
 import domain.exceptions.PrerequisitesNotValidException;
 
 public class EnrollCtrl {
@@ -43,7 +44,7 @@ public class EnrollCtrl {
             if (targetCourseSection == courseSection)
                 continue;
             if (targetCourseSection.getExamTime().equals(courseSection.getExamTime()))
-                throw new EnrollmentRulesViolationException(String.format("Two offerings %s and %s have the same exam time", targetCourseSection, courseSection));
+                throw new ExamTimeConflictException(targetCourseSection, courseSection);
         }
     }
 

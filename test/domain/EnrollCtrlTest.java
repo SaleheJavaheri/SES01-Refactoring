@@ -7,6 +7,7 @@ import java.util.*;
 
 import domain.exceptions.AlreadyPassedCourseException;
 import domain.exceptions.EnrollmentRulesViolationException;
+import domain.exceptions.ExamTimeConflictException;
 import domain.exceptions.PrerequisitesNotValidException;
 import org.junit.Before;
 import org.junit.Test;
@@ -135,7 +136,7 @@ public class EnrollCtrlTest {
 		new EnrollCtrl().enroll(bebe, requestedOfferings(phys1, dm));
 	}
 
-	@Test(expected = EnrollmentRulesViolationException.class)
+	@Test(expected = ExamTimeConflictException.class)
 	public void cannotTakeOfferingsWithSameExamTime() throws EnrollmentRulesViolationException {
 		Calendar cal = Calendar.getInstance();
 		new EnrollCtrl().enroll(bebe,
