@@ -1,11 +1,17 @@
 package domain;
 
 import java.util.List;
-import java.util.Map;
 
 import domain.exceptions.EnrollmentRulesViolationException;
 
 public class EnrollCtrl {
+
+    public static final int ACADEMIC_PROBATION_GRADE_LIMIT = 12;
+    public static final int ACADEMIC_PROBATION_UNITS_LIMIT = 14;
+    public static final int DISTINGUISHED_GRADE_LIMIT = 16;
+    public static final int NORMAL_STUDENT_UNITS_LIMIT = 16;
+    public static final int DISTINGUISHED_STUDENT_UNITS_LIMITS = 20;
+
     public void enroll(Student student, List<CourseSection> courseSections) throws EnrollmentRulesViolationException {
         validateCourseSections(student, courseSections);
         student.takeCourseSection(courseSections);
@@ -60,14 +66,16 @@ public class EnrollCtrl {
             );
     }
 
-    private void checkForGpaLimit(List<CourseSection> courses, Student student) throws EnrollmentRulesViolationException {
-        int unitsRequested = 0;
-        for (CourseSection o : courses)
-            unitsRequested += o.getCourse().getUnits();
-        if ((student.getGpa() < 12 && unitsRequested > 14) ||
-                (student.getGpa() < 16 && unitsRequested > 16) ||
-                (unitsRequested > 20))
-            throw new EnrollmentRulesViolationException(String.format("Number of units (%d) requested does not match GPA of %f", unitsRequested, student.getGpa()));
+    private void checkForGpaLimit(List<CourseSection> courseSections, Student student) throws EnrollmentRulesViolationException {
+        if ((student.getGpa() < ACADEMIC_PROBATION_GRADE_LIMIT && sumUnits(courseSections) > ACADEMIC_PROBATION_UNITS_LIMIT) ||
+                (student.getGpa() < DISTINGUISHED_GRADE_LIMIT && sumUnits(courseSections) > NORMAL_STUDENT_UNITS_LIMIT) ||
+                (sumUnits(courseSections) > DISTINGUISHED_STUDENT_UNITS_LIMITS))
+            throw new EnrollmentRulesViolationException(
+                    String.format("Number of units (%d) requested does not match GPA of %f", sumUnits(courseSections), student.getGpa()));
+    }
+
+    private int sumUnits(List<CourseSection> courseSections) {
+        return courseSections.stream().mapToInt(courseSection -> courseSection.getCourse().getUnits()).sum();
     }
 
 }
