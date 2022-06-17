@@ -6,22 +6,12 @@ import java.util.Map;
 import domain.exceptions.EnrollmentRulesViolationException;
 
 public class EnrollCtrl {
-	public void enroll(Student student, List<CourseSection> courses) throws EnrollmentRulesViolationException {
+    public void enroll(Student student, List<CourseSection> courses) throws EnrollmentRulesViolationException {
         Map<Term, StudentTerm> transcript = student.getTerms();
 
         for (CourseSection o : courses) {
             checkForAlreadyPassedCourse(o, student);
-            List<Course> prereqs = o.getCourse().getPrerequisites();
-			nextPre:
-			for (Course pre : prereqs) {
-                for (Map.Entry<Term, StudentTerm> tr : transcript.entrySet()) {
-                    for (Map.Entry<Course, Double> r : tr.getValue().getGrades().entrySet()) {
-                        if (r.getKey().equals(pre) && r.getValue() >= 10)
-                            continue nextPre;
-                    }
-				}
-				throw new EnrollmentRulesViolationException(String.format("The student has not passed %s as a prerequisite of %s", pre.toString(), o.getCourse().getName()));
-			}
+            checkForPrerequisites(o, student);
             for (CourseSection o2 : courses) {
                 if (o == o2)
                     continue;
@@ -30,11 +20,25 @@ public class EnrollCtrl {
                 if (o.getCourse().equals(o2.getCourse()))
                     throw new EnrollmentRulesViolationException(String.format("%s is requested to be taken twice", o.getCourse().getName()));
             }
-		}
+        }
         checkForGpaLimit(courses, student);
         for (CourseSection courseSection : courses)
-			student.takeCourseSection(courseSection);
-	}
+            student.takeCourseSection(courseSection);
+    }
+
+    private void checkForPrerequisites(CourseSection courseSection, Student student) throws EnrollmentRulesViolationException {
+        List<Course> prereqs = courseSection.getCourse().getPrerequisites();
+        nextPre:
+        for (Course pre : prereqs) {
+            for (Map.Entry<Term, StudentTerm> tr : student.getTerms().entrySet()) {
+                for (Map.Entry<Course, Double> r : tr.getValue().getGrades().entrySet()) {
+                    if (r.getKey().equals(pre) && r.getValue() >= 10)
+                        continue nextPre;
+                }
+            }
+            throw new EnrollmentRulesViolationException(String.format("The student has not passed %s as a prerequisite of %s", pre.toString(), courseSection.getCourse().getName()));
+        }
+    }
 
     private void checkForAlreadyPassedCourse(CourseSection o, Student student) throws EnrollmentRulesViolationException {
         for (Map.Entry<Term, StudentTerm> tr : student.getTerms().entrySet()) {
