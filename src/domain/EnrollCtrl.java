@@ -6,16 +6,19 @@ import java.util.Map;
 import domain.exceptions.EnrollmentRulesViolationException;
 
 public class EnrollCtrl {
-    public void enroll(Student student, List<CourseSection> courses) throws EnrollmentRulesViolationException {
-        for (CourseSection o : courses) {
-            checkForAlreadyPassedCourse(o, student);
-            checkForPrerequisites(o, student);
-            checkForExamTimeConflict(courses, o);
-            checkForDuplicatedRequest(courses, o);
+    public void enroll(Student student, List<CourseSection> courseSections) throws EnrollmentRulesViolationException {
+        validateCourseSections(student, courseSections);
+        student.takeCourseSection(courseSections);
+    }
+
+    private void validateCourseSections(Student student, List<CourseSection> targetCourseSection) throws EnrollmentRulesViolationException {
+        for (CourseSection courseSection : targetCourseSection) {
+            checkForAlreadyPassedCourse(courseSection, student);
+            checkForPrerequisites(courseSection, student);
+            checkForExamTimeConflict(targetCourseSection, courseSection);
+            checkForDuplicatedRequest(targetCourseSection, courseSection);
         }
-        checkForGpaLimit(courses, student);
-        for (CourseSection courseSection : courses)
-            student.takeCourseSection(courseSection);
+        checkForGpaLimit(targetCourseSection, student);
     }
 
     private void checkForDuplicatedRequest(List<CourseSection> courses, CourseSection targetCourseSection) throws EnrollmentRulesViolationException {
