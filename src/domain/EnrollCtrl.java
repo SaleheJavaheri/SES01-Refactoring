@@ -65,8 +65,7 @@ public class EnrollCtrl {
         if ((student.getGpa() < ACADEMIC_PROBATION_GRADE_LIMIT && sumUnits(courseSections) > ACADEMIC_PROBATION_UNITS_LIMIT) ||
                 (student.getGpa() < DISTINGUISHED_GRADE_LIMIT && sumUnits(courseSections) > NORMAL_STUDENT_UNITS_LIMIT) ||
                 (sumUnits(courseSections) > DISTINGUISHED_STUDENT_UNITS_LIMITS))
-            throw new EnrollmentRulesViolationException(
-                    String.format("Number of units (%d) requested does not match GPA of %f", sumUnits(courseSections), student.getGpa()));
+            throw new GpaLimitException(sumUnits(courseSections), student.getGpa());
     }
 
     private int sumUnits(List<CourseSection> courseSections) {

@@ -159,7 +159,7 @@ public class EnrollCtrlTest {
 		assertTrue(hasTaken(bebe, dm, math1, farsi, akhlagh, english, maaref));
 	}
 
-	@Test(expected = EnrollmentRulesViolationException.class)
+	@Test(expected = GpaLimitException.class)
 	public void cannotTake15WithGPA11() throws EnrollmentRulesViolationException {
 		bebe.addCourseGrade(phys1, new Term("t1", new Date( 1397, 07, 01)), 13);
 		bebe.addCourseGrade(prog, new Term("t1", new Date( 1397, 07, 01)), 11);
@@ -189,7 +189,7 @@ public class EnrollCtrlTest {
 		assertTrue(hasTaken(bebe, dm, math2, farsi, akhlagh, english, maaref));
 	}
 
-	@Test(expected = EnrollmentRulesViolationException.class)
+	@Test(expected = DuplicatedRequestException.class)
 	public void cannotTake18WithGPA15() throws EnrollmentRulesViolationException {
 		bebe.addCourseGrade(phys1, new Term("t1", new Date( 1397, 07, 01)), 15);
 		bebe.addCourseGrade(prog, new Term("t1", new Date( 1397, 07, 01)), 15);
@@ -210,7 +210,7 @@ public class EnrollCtrlTest {
 		assertTrue(hasTaken(bebe, ap, dm, math2, phys2, economy, karafarini, farsi));
 	}
 
-	@Test(expected = EnrollmentRulesViolationException.class)
+	@Test(expected = GpaLimitException.class)
 	public void cannotTake24() throws EnrollmentRulesViolationException {
 		bebe.addCourseGrade(phys1, new Term("t1", new Date( 1397, 07, 01)), 16);
 		bebe.addCourseGrade(prog, new Term("t1", new Date( 1397, 07, 01)), 16);
