@@ -14,7 +14,12 @@ public class StudentTerm {
         return grades.get(course);
     }
 
-    public Map<Course, Double>  getGrades() {
+    public Map<Course, Double> getGrades() {
         return grades;
+    }
+
+    public boolean hasPassed(Course course) {
+        Double grade = grades.get(course);
+        return grade != null && grade >= 10;
     }
 }
