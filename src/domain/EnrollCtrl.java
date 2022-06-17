@@ -12,18 +12,30 @@ public class EnrollCtrl {
         for (CourseSection o : courses) {
             checkForAlreadyPassedCourse(o, student);
             checkForPrerequisites(o, student);
-            for (CourseSection o2 : courses) {
-                if (o == o2)
-                    continue;
-                if (o.getExamTime().equals(o2.getExamTime()))
-                    throw new EnrollmentRulesViolationException(String.format("Two offerings %s and %s have the same exam time", o, o2));
-                if (o.getCourse().equals(o2.getCourse()))
-                    throw new EnrollmentRulesViolationException(String.format("%s is requested to be taken twice", o.getCourse().getName()));
-            }
+            checkForExamTimeConflict(courses, o);
+            checkForDuplicatedRequest(courses, o);
         }
         checkForGpaLimit(courses, student);
         for (CourseSection courseSection : courses)
             student.takeCourseSection(courseSection);
+    }
+
+    private void checkForDuplicatedRequest(List<CourseSection> courses, CourseSection targetCourseSection) throws EnrollmentRulesViolationException {
+        for (CourseSection courseSection : courses) {
+            if (targetCourseSection == courseSection)
+                continue;
+            if (targetCourseSection.getCourse().equals(courseSection.getCourse()))
+                throw new EnrollmentRulesViolationException(String.format("%s is requested to be taken twice", targetCourseSection.getCourse().getName()));
+        }
+    }
+
+    private void checkForExamTimeConflict(List<CourseSection> courses, CourseSection targetCourseSection) throws EnrollmentRulesViolationException {
+        for (CourseSection courseSection : courses) {
+            if (targetCourseSection == courseSection)
+                continue;
+            if (targetCourseSection.getExamTime().equals(courseSection.getExamTime()))
+                throw new EnrollmentRulesViolationException(String.format("Two offerings %s and %s have the same exam time", targetCourseSection, courseSection));
+        }
     }
 
     private void checkForPrerequisites(CourseSection courseSection, Student student) throws EnrollmentRulesViolationException {
