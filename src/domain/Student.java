@@ -45,15 +45,8 @@ public class Student {
 	}
 
 	public double getGpa() {
-		double points = 0;
-		int totalUnits = 0;
-		for (Map.Entry<Term, StudentTerm> tr : getTerms().entrySet()) {
-			for (Map.Entry<Course, Double> r : tr.getValue().getGrades().entrySet()) {
-				points += r.getValue() * r.getKey().getUnits();
-				totalUnits += r.getKey().getUnits();
-			}
-		}
-		double gpa = points / totalUnits;
-		return gpa;
+		double points = getTerms().values().stream().mapToDouble(StudentTerm::getPoint).sum();
+		int totalUnits = getTerms().values().stream().mapToInt(StudentTerm::getSumUnits).sum();
+		return points / totalUnits;
 	}
 }

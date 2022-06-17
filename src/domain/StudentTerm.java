@@ -23,4 +23,16 @@ public class StudentTerm {
         Double grade = grades.get(course);
         return grade != null && grade >= COURSE_PASSED_GRADE_LIMIT;
     }
+
+    public double getPoint() {
+        double result = 0;
+        for (Map.Entry<Course, Double> grades :grades.entrySet()) {
+            result += grades.getValue() * grades.getKey().getUnits();
+        }
+        return result;
+    }
+
+    public int getSumUnits() {
+        return grades.keySet().stream().mapToInt(Course::getUnits).sum();
+    }
 }
