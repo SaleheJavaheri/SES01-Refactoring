@@ -7,8 +7,6 @@ import domain.exceptions.EnrollmentRulesViolationException;
 
 public class EnrollCtrl {
     public void enroll(Student student, List<CourseSection> courses) throws EnrollmentRulesViolationException {
-        Map<Term, StudentTerm> transcript = student.getTerms();
-
         for (CourseSection o : courses) {
             checkForAlreadyPassedCourse(o, student);
             checkForPrerequisites(o, student);
