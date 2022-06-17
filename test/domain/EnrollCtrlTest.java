@@ -2,7 +2,6 @@ package domain;
 
 import static org.junit.Assert.*;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 import domain.exceptions.EnrollmentRulesViolationException;
@@ -30,10 +29,14 @@ public class EnrollCtrlTest {
 		math1 = new Course("4", "MATH1", 3);
 		phys1 = new Course("8", "PHYS1", 3);
 		prog = new Course("7", "PROG", 4);
-		math2 = new Course("6", "MATH2", 3).addPrerequisitesAndReturn(math1);
-		phys2 = new Course("9", "PHYS2", 3).addPrerequisitesAndReturn(math1, phys1);
-		ap = new Course("2", "AP", 3).addPrerequisitesAndReturn(prog);
-		dm = new Course("3", "DM", 3).addPrerequisitesAndReturn(prog);
+		math2 = new Course("6", "MATH2", 3);
+		math2.addPrerequisites(math1);
+		phys2 = new Course("9", "PHYS2", 3);
+		phys2.addPrerequisites(math1, phys1);
+		ap = new Course("2", "AP", 3);
+		ap.addPrerequisites(prog);
+		dm = new Course("3", "DM", 3);
+		dm.addPrerequisites(prog);
 		economy = new Course("1", "ECO", 3);
 		maaref = new Course("5", "MAAREF", 2);
 		farsi = new Course("12", "FA", 2);

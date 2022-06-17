@@ -22,9 +22,8 @@ public class Course {
 		prerequisites.add(c);
 	}
 
-	public Course addPrerequisitesAndReturn(Course... pres) {
+	public void addPrerequisites(Course... pres) {
 		prerequisites.addAll(Arrays.asList(pres));
-		return this;
 	}
 
 	public List<Course> getPrerequisites() {
