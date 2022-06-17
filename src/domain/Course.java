@@ -2,6 +2,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Course {
 	private String id;
@@ -17,11 +18,11 @@ public class Course {
 		prerequisites = new ArrayList<Course>();
 	}
 	
-	public void addPre(Course c) {
+	public void addPrerequisite(Course c) {
 		prerequisites.add(c);
 	}
 
-	public Course withPre(Course... pres) {
+	public Course addPrerequisitesAndReturn(Course... pres) {
 		prerequisites.addAll(Arrays.asList(pres));
 		return this;
 	}
@@ -30,19 +31,11 @@ public class Course {
 		return prerequisites;
 	}
 
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(name);
-		sb.append(" {");
-		for (Course pre : getPrerequisites()) {
-			sb.append(pre.getName());
-			sb.append(", ");
-		}
-		sb.append("}");
-		return sb.toString();
+	public String getPrerequisitesToString() {
+		return "{ " + prerequisites.stream().map(Object::toString).collect(Collectors.joining(", ")) + " }";
 	}
 
-	public String getName() {
+	public String toString() {
 		return name;
 	}
 

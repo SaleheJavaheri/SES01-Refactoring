@@ -12,7 +12,7 @@ public class EnrollCtrl {
             for (Map.Entry<Term, StudentTerm> tr : transcript.entrySet()) {
                 for (Map.Entry<Course, Double> r : tr.getValue().getGrades().entrySet()) {
                     if (r.getKey().equals(o.getCourse()) && r.getValue() >= 10)
-                        throw new EnrollmentRulesViolationException(String.format("The student has already passed %s", o.getCourse().getName()));
+                        throw new EnrollmentRulesViolationException(String.format("The student has already passed %s", o.getCourse().toString()));
                 }
             }
 			List<Course> prereqs = o.getCourse().getPrerequisites();
@@ -24,7 +24,7 @@ public class EnrollCtrl {
                             continue nextPre;
                     }
 				}
-				throw new EnrollmentRulesViolationException(String.format("The student has not passed %s as a prerequisite of %s", pre.getName(), o.getCourse().getName()));
+				throw new EnrollmentRulesViolationException(String.format("The student has not passed %s as a prerequisite of %s", pre.toString(), o.getCourse().toString()));
 			}
             for (CSE o2 : courses) {
                 if (o == o2)
@@ -32,7 +32,7 @@ public class EnrollCtrl {
                 if (o.getExamTime().equals(o2.getExamTime()))
                     throw new EnrollmentRulesViolationException(String.format("Two offerings %s and %s have the same exam time", o, o2));
                 if (o.getCourse().equals(o2.getCourse()))
-                    throw new EnrollmentRulesViolationException(String.format("%s is requested to be taken twice", o.getCourse().getName()));
+                    throw new EnrollmentRulesViolationException(String.format("%s is requested to be taken twice", o.getCourse().toString()));
             }
 		}
 		int unitsRequested = 0;

@@ -29,7 +29,7 @@ public class CSE {
 	}
 	
 	public String toString() {
-		return course.getName() + " - " + section;
+		return course.toString() + " - " + section;
 	}
 	
 	public Date getExamTime() {
