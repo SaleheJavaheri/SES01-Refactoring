@@ -66,7 +66,6 @@ public class EnrollCtrlTest {
 
 	@Test
 	public void canTakeBasicCoursesInFirstTerm() throws EnrollmentRulesViolationException {
-		System.out.println(phys2.getPrerequisitesToString());
 		new EnrollCtrl().enroll(bebe, requestedOfferings(math1, phys1, prog));
 		assertTrue(hasTaken(bebe, math1, phys1, prog));
 	}

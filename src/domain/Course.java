@@ -48,7 +48,6 @@ public class Course {
 	}
 
 	public boolean equals(Object obj) {
-		Course other = (Course)obj;
-		return id.equals(other.id);
+		return obj instanceof Course && id.equals(((Course) obj).id);
 	}
 }
