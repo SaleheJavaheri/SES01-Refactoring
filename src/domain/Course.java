@@ -8,7 +8,7 @@ public class Course {
 	private String name;
 	private int units;
 	
-	List<Course> prerequisites;
+	private List<Course> prerequisites;
 
 	public Course(String id, String name, int units) {
 		this.id = id;
@@ -18,7 +18,7 @@ public class Course {
 	}
 	
 	public void addPre(Course c) {
-		getPrerequisites().add(c);
+		prerequisites.add(c);
 	}
 
 	public Course withPre(Course... pres) {
