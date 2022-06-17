@@ -47,12 +47,12 @@ public class EnrollCtrlTest {
 		bebe = new Student("1", "Bebe");
 	}
 
-	private ArrayList<CSE> requestedOfferings(Course...courses) {
+	private ArrayList<CourseSection> requestedOfferings(Course...courses) {
 		Calendar cal = Calendar.getInstance();
-		ArrayList<CSE> result = new ArrayList<>();
+		ArrayList<CourseSection> result = new ArrayList<>();
 		for (Course course : courses) {
 			cal.add(Calendar.DATE, 1);
-			result.add(new CSE(course, cal.getTime()));
+			result.add(new CourseSection(course, cal.getTime(), 1));
 		}
 		return result;
 	}
@@ -60,7 +60,7 @@ public class EnrollCtrlTest {
 	private boolean hasTaken(Student s, Course...courses) {
 	    Set<Course> coursesTaken = new HashSet<>();
 		for (CourseSection cs : s.getCurrentTerm())
-				coursesTaken.add(cs.course);
+				coursesTaken.add(cs.getCourse());
 		for (Course course : courses) {
 			if (!coursesTaken.contains(course))
 				return false;
@@ -138,9 +138,9 @@ public class EnrollCtrlTest {
 		Calendar cal = Calendar.getInstance();
 		new EnrollCtrl().enroll(bebe,
 				List.of(
-					new CSE(phys1, cal.getTime()),
-					new CSE(math1, cal.getTime()),
-					new CSE(phys1, cal.getTime())
+					new CourseSection(phys1, cal.getTime(), 1),
+					new CourseSection(math1, cal.getTime(), 1),
+					new CourseSection(phys1, cal.getTime(), 1)
 				));
 	}
 

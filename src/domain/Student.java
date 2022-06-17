@@ -16,8 +16,8 @@ public class Student {
 		this.currentTerm = new ArrayList<>();
 	}
 	
-	public void takeCourse(Course c, int section) {
-		currentTerm.add(new CourseSection(c, section));
+	public void takeCourseSection(CourseSection courseSection) {
+		currentTerm.add(courseSection);
 	}
 
 	public Map<Term, StudentTerm> getTerms() {
