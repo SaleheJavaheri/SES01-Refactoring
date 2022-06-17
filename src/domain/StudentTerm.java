@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StudentTerm {
+    public static final int COURSE_PASSED_GRADE_LIMIT = 10;
     private Map<Course, Double> grades = new HashMap<>();
 
     public void addGrade(Course course, Double grade) {
@@ -20,6 +21,6 @@ public class StudentTerm {
 
     public boolean hasPassed(Course course) {
         Double grade = grades.get(course);
-        return grade != null && grade >= 10;
+        return grade != null && grade >= COURSE_PASSED_GRADE_LIMIT;
     }
 }
