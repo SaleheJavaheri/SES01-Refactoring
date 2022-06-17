@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.sql.Date;
 import java.util.*;
 
+import domain.exceptions.AlreadyPassedCourseException;
 import domain.exceptions.EnrollmentRulesViolationException;
 import org.junit.Before;
 import org.junit.Test;
@@ -107,7 +108,7 @@ public class EnrollCtrlTest {
 		assertTrue(hasTaken(bebe, math2, dm));
 	}
 
-	@Test(expected = EnrollmentRulesViolationException.class)
+	@Test(expected = AlreadyPassedCourseException.class)
 	public void cannotTakeAlreadyPassed1() throws EnrollmentRulesViolationException {
 		bebe.addCourseGrade(phys1, new Term("t1", new Date( 1397, 07, 01)), 18);
 		bebe.addCourseGrade(prog, new Term("t1", new Date( 1397, 07, 01)), 12);
@@ -120,7 +121,7 @@ public class EnrollCtrlTest {
 		new EnrollCtrl().enroll(bebe, requestedOfferings(math1, dm));
 	}
 
-	@Test(expected = EnrollmentRulesViolationException.class)
+	@Test(expected = AlreadyPassedCourseException.class)
 	public void cannotTakeAlreadyPassed2() throws EnrollmentRulesViolationException {
 		bebe.addCourseGrade(phys1, new Term("t1", new Date( 1397, 07, 01)), 18);
 		bebe.addCourseGrade(prog, new Term("t1", new Date( 1397, 07, 01)), 12);

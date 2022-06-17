@@ -2,6 +2,7 @@ package domain;
 
 import java.util.List;
 
+import domain.exceptions.AlreadyPassedCourseException;
 import domain.exceptions.EnrollmentRulesViolationException;
 
 public class EnrollCtrl {
@@ -61,9 +62,7 @@ public class EnrollCtrl {
 
     private void checkForAlreadyPassedCourse(CourseSection courseSection, Student student) throws EnrollmentRulesViolationException {
         if (student.getTerms().values().stream().anyMatch(studentTerm -> studentTerm.hasPassed(courseSection.getCourse())))
-            throw new EnrollmentRulesViolationException(
-                    String.format("The student has already passed %s", courseSection.getCourse().getName())
-            );
+            throw new AlreadyPassedCourseException(courseSection.getCourse());
     }
 
     private void checkForGpaLimit(List<CourseSection> courseSections, Student student) throws EnrollmentRulesViolationException {
