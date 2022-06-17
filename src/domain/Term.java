@@ -9,11 +9,6 @@ public class Term {
 	private String name;
 	private Date startDate;
 
-	public Term(String name) {
-		this.name = name;
-		this.startDate = null;
-	}
-
 	public Term(String name, Date startDate) {
 		this.name = name;
 		this.startDate = startDate;
