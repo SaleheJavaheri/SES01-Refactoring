@@ -32,11 +32,16 @@ public class Course {
 	}
 
 	public String getPrerequisitesToString() {
-		return "{ " + prerequisites.stream().map(Object::toString).collect(Collectors.joining(", ")) + " }";
+		return String.format("{ %s }",
+				prerequisites.stream().map(Course::getName).collect(Collectors.joining(", ")));
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public String toString() {
-		return name;
+		return String.format("%s %s", name, getPrerequisitesToString());
 	}
 
 	public int getUnits() {
