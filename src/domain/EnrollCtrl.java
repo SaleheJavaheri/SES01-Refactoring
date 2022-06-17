@@ -6,8 +6,8 @@ import java.util.Map;
 import domain.exceptions.EnrollmentRulesViolationException;
 
 public class EnrollCtrl {
-	public void enroll(Student s, List<CourseSection> courses) throws EnrollmentRulesViolationException {
-        Map<Term, StudentTerm> transcript = s.getTerms();
+	public void enroll(Student student, List<CourseSection> courses) throws EnrollmentRulesViolationException {
+        Map<Term, StudentTerm> transcript = student.getTerms();
 		for (CourseSection o : courses) {
             for (Map.Entry<Term, StudentTerm> tr : transcript.entrySet()) {
                 for (Map.Entry<Course, Double> r : tr.getValue().getGrades().entrySet()) {
@@ -52,6 +52,6 @@ public class EnrollCtrl {
 				(unitsRequested > 20))
 			throw new EnrollmentRulesViolationException(String.format("Number of units (%d) requested does not match GPA of %f", unitsRequested, gpa));
 		for (CourseSection courseSection : courses)
-			s.takeCourseSection(courseSection);
+			student.takeCourseSection(courseSection);
 	}
 }
