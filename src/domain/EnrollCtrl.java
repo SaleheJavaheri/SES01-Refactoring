@@ -46,20 +46,18 @@ public class EnrollCtrl {
     }
 
     private void isPassedCourseSection(CourseSection courseSection, Student student, Course course) throws EnrollmentRulesViolationException {
-        if(student.getTerms().values().stream().noneMatch(studentTerm -> studentTerm.hasPassed(course)))
+        if (student.getTerms().values().stream().noneMatch(studentTerm -> studentTerm.hasPassed(course)))
             throw new EnrollmentRulesViolationException(
                     String.format("The student has not passed %s as a prerequisite of %s",
-                            course.toString(), courseSection.getCourse().getName())
+                            course, courseSection.getCourse().getName())
             );
     }
 
-    private void checkForAlreadyPassedCourse(CourseSection o, Student student) throws EnrollmentRulesViolationException {
-        for (Map.Entry<Term, StudentTerm> tr : student.getTerms().entrySet()) {
-            for (Map.Entry<Course, Double> r : tr.getValue().getGrades().entrySet()) {
-                if (r.getKey().equals(o.getCourse()) && r.getValue() >= 10)
-                    throw new EnrollmentRulesViolationException(String.format("The student has already passed %s", o.getCourse().getName()));
-            }
-        }
+    private void checkForAlreadyPassedCourse(CourseSection courseSection, Student student) throws EnrollmentRulesViolationException {
+        if (student.getTerms().values().stream().anyMatch(studentTerm -> studentTerm.hasPassed(courseSection.getCourse())))
+            throw new EnrollmentRulesViolationException(
+                    String.format("The student has already passed %s", courseSection.getCourse().getName())
+            );
     }
 
     private void checkForGpaLimit(List<CourseSection> courses, Student student) throws EnrollmentRulesViolationException {
