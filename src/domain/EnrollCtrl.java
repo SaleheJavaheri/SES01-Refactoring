@@ -2,10 +2,7 @@ package domain;
 
 import java.util.List;
 
-import domain.exceptions.AlreadyPassedCourseException;
-import domain.exceptions.EnrollmentRulesViolationException;
-import domain.exceptions.ExamTimeConflictException;
-import domain.exceptions.PrerequisitesNotValidException;
+import domain.exceptions.*;
 
 public class EnrollCtrl {
 
@@ -35,7 +32,7 @@ public class EnrollCtrl {
             if (targetCourseSection == courseSection)
                 continue;
             if (targetCourseSection.getCourse().equals(courseSection.getCourse()))
-                throw new EnrollmentRulesViolationException(String.format("%s is requested to be taken twice", targetCourseSection.getCourse().getName()));
+                throw new DuplicatedRequestException(courseSection.getCourse());
         }
     }
 

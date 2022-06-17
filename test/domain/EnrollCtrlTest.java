@@ -5,10 +5,7 @@ import static org.junit.Assert.*;
 import java.sql.Date;
 import java.util.*;
 
-import domain.exceptions.AlreadyPassedCourseException;
-import domain.exceptions.EnrollmentRulesViolationException;
-import domain.exceptions.ExamTimeConflictException;
-import domain.exceptions.PrerequisitesNotValidException;
+import domain.exceptions.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -147,7 +144,7 @@ public class EnrollCtrlTest {
 				));
 	}
 
-	@Test(expected = EnrollmentRulesViolationException.class)
+	@Test(expected = DuplicatedRequestException.class)
 	public void cannotTakeACourseTwice() throws EnrollmentRulesViolationException {
 		new EnrollCtrl().enroll(bebe, requestedOfferings(phys1, dm, phys1));
 	}
