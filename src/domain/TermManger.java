@@ -1,8 +1,5 @@
 package domain;
 
-import domain.StudentTerm;
-import domain.Term;
-
 import java.util.HashMap;
 import java.util.Map;
 
