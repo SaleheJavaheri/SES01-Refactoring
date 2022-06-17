@@ -4,6 +4,7 @@ import java.util.List;
 
 import domain.exceptions.AlreadyPassedCourseException;
 import domain.exceptions.EnrollmentRulesViolationException;
+import domain.exceptions.PrerequisitesNotValidException;
 
 public class EnrollCtrl {
 
@@ -54,10 +55,7 @@ public class EnrollCtrl {
 
     private void isPassedCourseSection(CourseSection courseSection, Student student, Course course) throws EnrollmentRulesViolationException {
         if (student.getTerms().values().stream().noneMatch(studentTerm -> studentTerm.hasPassed(course)))
-            throw new EnrollmentRulesViolationException(
-                    String.format("The student has not passed %s as a prerequisite of %s",
-                            course, courseSection.getCourse().getName())
-            );
+            throw new PrerequisitesNotValidException(course, courseSection.getCourse());
     }
 
     private void checkForAlreadyPassedCourse(CourseSection courseSection, Student student) throws EnrollmentRulesViolationException {

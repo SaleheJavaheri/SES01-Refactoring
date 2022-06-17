@@ -7,6 +7,7 @@ import java.util.*;
 
 import domain.exceptions.AlreadyPassedCourseException;
 import domain.exceptions.EnrollmentRulesViolationException;
+import domain.exceptions.PrerequisitesNotValidException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -81,12 +82,12 @@ public class EnrollCtrlTest {
 		assertTrue(hasTaken(bebe));
 	}
 
-	@Test(expected = EnrollmentRulesViolationException.class)
+	@Test(expected = PrerequisitesNotValidException.class)
 	public void cannotTakeWithoutPreTaken() throws EnrollmentRulesViolationException {
 		new EnrollCtrl().enroll(bebe, requestedOfferings(math2, phys1, prog));
 	}
 
-	@Test(expected = EnrollmentRulesViolationException.class)
+	@Test(expected = PrerequisitesNotValidException.class)
 	public void cannotTakeWithoutPrePassed() throws EnrollmentRulesViolationException {
 		bebe.addCourseGrade(phys1, new Term("t1", new Date( 1397, 07, 01)), 18);
 		bebe.addCourseGrade(prog, new Term("t1", new Date( 1397, 07, 01)), 12);
